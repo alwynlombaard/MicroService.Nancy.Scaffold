@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "layout.cshtml";
+}
+
+<script>
+    (function () {
+        var app = angular.module('dashboard', []);
+
+        app.controller("homeCtrl", function ($scope, $timeout, $http) {
+            var update = function() {
+                $http.get("/dynamic")
+                   .success(function (data) {
+                       $scope.model = data;
+
+                       $scope.message = data.message;
+                       $scope.timestamp = data.timestamp;
+
+                       $timeout(function () {
+                           update();
+                       }, 1000);
+                   })
+                    .error(function() {
+                        $timeout(function() {
+                            update();
+                        }, 30000);
+                    });
+            };
+            $timeout(function () {
+                update();
+            }, 0);
+        });
+    }());
+</script>
+<div ng-app="dashboard" ng-controller="homeCtrl">
+    <div class="alert alert-info">
+        <span ng-bind="message">@Model.Message</span> at
+        <span ng-bind="timestamp">@Model.Timestamp</span>
+    </div>
+</div>
