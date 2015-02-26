@@ -1,0 +1,149 @@
+﻿@{
+    Layout = "layout.cshtml";
+}
+
+<style>
+
+   .btn-space {
+       margin-bottom: 20px;
+       width: 45px;
+       font-size: x-large;
+       text-align: center;
+       background: lightgrey;
+       cursor: pointer;
+   }
+
+    .gen-space {
+        margin-bottom: 20px;
+    }
+
+    .success {
+        background-color: lightgreen;
+    }
+
+    .failure {
+        background-color: lightcoral;
+    }
+</style>
+
+<script>
+    (function () {
+        var app = angular.module('interval', []);
+
+        app.controller("intervalCtrl", function ($scope, $sce) {
+            $scope.selectedNote = "C";
+           
+            $scope.sharp = $sce.trustAsHtml("&#9839;");
+            $scope.flat = $sce.trustAsHtml("&#9837;");
+            $scope.sharpNotes = ["A", "A&#9839;", "B", "C", "C&#9839;", "D", "D&#9839;", "E", "F", "F&#9839;", "G", "G&#9839;"];
+            $scope.flatNotes = ["A", "B&#9837;", "B", "C", "D&#9837;", "D", "E&#9837;", "E", "F", "G&#9837;", "G", "A&#9837;"];
+            $scope.intervals = [
+                { label: "Minor 2nd", size: 1 },
+                { label: "Major 2nd", size: 2 },
+                { label: "Minor 3rd", size: 3 },
+                { label: "Major 3rd", size: 4 },
+                { label: "Perfect 4th", size: 5 },
+                { label: "Tritone", size: 6 },
+                { label: "Perfect 5th", size: 7 },
+                { label: "Minor 6th", size: 8 },
+                { label: "Major 6th", size: 9 },
+                { label: "Minor 7th", size: 10 },
+                { label: "Major 7th", size: 11 }];
+            $scope.selectedInterval = $scope.intervals[3];
+            $scope.trustThis = function (s) { return $sce.trustAsHtml(s); };
+            
+            $scope.getNextSharpNote = function () {
+                var index = Math.floor(Math.random() * $scope.sharpNotes.length);
+                return $scope.selectedNote =  $scope.sharpNotes[index];
+            };
+            
+            $scope.getNextFlatNote = function () {
+                var index = Math.floor(Math.random() * $scope.flatNotes.length);
+                return $scope.selectedNote = $scope.flatNotes[index];
+            };
+
+            $scope.answer = "none";
+                
+            $scope.submitAnswer = function (a) {
+                $scope.answer = a;
+
+                $scope.isAnswerCorrect();
+            };
+
+            $scope.greenIndicatorIndex = -1;
+            $scope.redIndicatorIndex = -1;
+                
+            $scope.isAnswerCorrect = function() {
+                $scope.greenIndicatorIndex = -1;
+                $scope.redIndicatorIndex = -1;
+                
+                var answerIndex = $scope.sharpNotes.indexOf($scope.answer);
+                if(answerIndex < 0) {
+                    answerIndex = $scope.flatNotes.indexOf($scope.answer);
+                }
+                if(answerIndex < 0){return ;}
+
+                var selectedNoteIndex = $scope.sharpNotes.indexOf($scope.selectedNote);
+                if (selectedNoteIndex < 0) {
+                    selectedNoteIndex = $scope.flatNotes.indexOf($scope.selectedNote);
+                }
+                if (selectedNoteIndex < 0) { return; }
+                
+                var intervalSize = $scope.selectedInterval.size;
+
+                var correctAnswerIndex = selectedNoteIndex + intervalSize;
+                if (correctAnswerIndex > 11) {
+                    correctAnswerIndex = correctAnswerIndex - 12;
+                }
+                
+                if (answerIndex === correctAnswerIndex) {
+                    $scope.greenIndicatorIndex = correctAnswerIndex;
+                } else {
+                    $scope.redIndicatorIndex = answerIndex;
+                }
+
+
+            };
+
+
+        });
+    }());
+</script>
+
+<div ng-app="interval" ng-controller="intervalCtrl">
+    <div class="alert alert-info">
+        
+        <div class="gen-space">
+            <button ng-click="getNextSharpNote()">Get a note (with sharps)</button>
+            <button ng-click="getNextFlatNote()">Get a note (with flats)</button>
+        </div>
+        
+        <h1 class="gen-space" ng-bind-html="trustThis(selectedNote)"></h1>
+    
+        <select class="gen-space" ng-model="selectedInterval" ng-options="interval.label for interval in intervals"></select>
+        
+        
+        <h3>Select the <span ng-bind="selectedInterval.label"></span> above <span ng-bind-html="trustThis(selectedNote)"></span></h3>
+        
+        <div class="row">
+            <div class="col-lg-1">
+                <div ng-repeat="(key, value) in flatNotes">
+                    <div class="btn-space" ng-class="{success :greenIndicatorIndex===$index, 'failure':redIndicatorIndex===$index}">
+                        <div ng-bind-html="trustThis(value)" ng-click="submitAnswer(value)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1">
+                <div ng-repeat="(key, value) in sharpNotes">
+                    <div class="btn-space" ng-class="{success :greenIndicatorIndex===$index, 'failure':redIndicatorIndex===$index}">
+                        <div ng-bind-html="trustThis(value)" ng-click="submitAnswer(value)"></div>
+                    </div>
+                    </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+

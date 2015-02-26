@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 using log4net;
 using MicroService.Nancy.Nancy.Models;
 using Nancy;
@@ -26,6 +27,8 @@ namespace MicroService.Nancy.Nancy.Modules
                     Message = "Hello world",
                     Timestamp = DateTime.UtcNow.ToLongTimeString()
                 };
+
+            Get["/test"] = x => new TestModel{};
         }
     }
 }

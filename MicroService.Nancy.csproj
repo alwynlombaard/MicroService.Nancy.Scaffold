@@ -100,6 +100,7 @@
     <Compile Include="IoC\IocModule.cs" />
     <Compile Include="MicroService.cs" />
     <Compile Include="Nancy\Bootstrapper.cs" />
+    <Compile Include="Nancy\Models\TestModel.cs" />
     <Compile Include="Nancy\Modules\HomeModule.cs" />
     <Compile Include="Nancy\Models\DynamicPageModel.cs" />
     <Compile Include="Nancy\Models\HomeModel.cs" />
@@ -121,6 +122,7 @@
     <None Include="Content\js\jquery-2.0.3.min.map">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Nancy\Views\test.cshtml" />
     <None Include="Nancy\Views\home.cshtml" />
     <None Include="Nancy\Views\dynamicPage.cshtml" />
     <None Include="Nancy\Views\layout.cshtml" />
