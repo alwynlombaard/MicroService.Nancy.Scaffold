@@ -123,6 +123,7 @@
     <None Include="Content\js\jquery-2.0.3.min.map">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="MicroService.Nancy.nuspec" />
     <None Include="Nancy\Views\home.cshtml" />
     <None Include="Nancy\Views\dynamicPage.cshtml" />
     <None Include="Nancy\Views\layout.cshtml" />

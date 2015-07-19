@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>MicroService.nancy</id>
+    <version>1.0.0</version>
+    <title>CertiPay.Common</title>
+    <tags>nancy, microservice</tags>
+    <description>Replace this title and description with something describing your service</description>
+    <projectUrl>https://github.com/alwynlombaard/MicroService.Nancy.Scaffold</projectUrl>
+    <licenseUrl>https://github.com/alwynlombaard/MicroService.Nancy.Scaffold/blob/master/LICENSE.md</licenseUrl>
+  </metadata>
+</package>
